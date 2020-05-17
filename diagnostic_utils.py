@@ -311,6 +311,7 @@ def perform_float_test():
 
         return float_dict
 
+
 # Name: perform_prime_test
 # Parameters: diagnostic_dict = a dictionary of key-value pairs that relates to diagnostic information
 #                               about the gateway.
@@ -441,9 +442,9 @@ def fulfill_test_order(test_name):
 
     test_dictionary = {}
 
-    if test_name == 'gatewayHB':
+    if test_name == 'heartbeat':
 
-        test_dictionary = get_gw_heartbeat()
+        test_dictionary = get_heartbeat()
 
     elif test_name == 'memory':
 
@@ -476,11 +477,11 @@ def fulfill_test_order(test_name):
     return test_dictionary
 
 
-def fulfill_custom_test_list(test_set, gateway_id):
+def fulfill_custom_test_list(test_set, computer_id):
 
     test_dict = {}
 
-    test_dict["gateway_id"] = gateway_id
+    test_dict["computer_id"] = computer_id
 
     if "integer" in test_set:
 
@@ -508,6 +509,8 @@ def fulfill_custom_test_list(test_set, gateway_id):
 # Function Name: perform_daily_diagnostic
 # Paramaters: computer_id = an integer meant to identify the computer that is conducting a daily diagnostic
 # Purpose:
+
+
 def perform_daily_diagnostic(computer_id):
 
     diagnostic_dictionary = {}
@@ -518,11 +521,14 @@ def perform_daily_diagnostic(computer_id):
     diagnostic_dictionary["float"] = perform_float_test()
     diagnostic_dictionary["prime"] = perform_prime_test()
 
-    diagnostic_dictionary["gateway_id"] = gateway_id
+    diagnostic_dictionary["computer_id"] = computer_id
 
     return diagnostic_dictionary
 
+
 # Function Name: string_to_list
+
+
 def string_to_list(list_as_string):
 
     list_as_string = list_as_string[1:-1]
@@ -534,19 +540,20 @@ def string_to_list(list_as_string):
     return string_as_list
 
 
-# Function Name: show_menu
+# Function Name: show_main_menu
 # Parameters: None
-# Purpose: To display the menu options to the user in a clear and concise manner.
-def show_menu():
+# Purpose: To display the Main Menu options to the user in a clear and concise manner.
+def show_main_menu():
 
     print("""
         
-********************** Diagnostic Helper ******************
+**************** Diagnostic Helper - Main Menu ************
 *                                                         *
 *                                                         *
-*                      1 - Run Tests                      *
-*                      2 - Export Results to Excel        *
-*                      3 - Exit                           *
+*                1 - Perform a Single Test                *
+*                2 - Perform All Tests                    *
+*                3 - Check "Heartbeat"                    *
+*                4 - Exit                                 *
 *                                                         *
 *                                                         *
 *                                                         *
@@ -554,6 +561,27 @@ def show_menu():
 
           """)
 
+
+# Function Name: show_single_test_menu
+# Parameters: None
+# Purpose: To display the Single Test Menu options to the user in a clear and concise manner.
+def show_single_test_menu():
+
+    print("""
+        
+**************** Diagnostic Helper - Test Menu ************
+*                                                         *
+*                                                         *
+*                1 - Memory Test                          *
+*                2 - Storage Test                         *
+*                3 - Integer Test                         *
+*                4 - Float Test                           *
+*                5 - Prime Test                           *
+*                6 - Previous Menu                        *
+*                                                         *
+***********************************************************
+
+          """)
 
 # Function Name: get_user_int
 # Parameters:
@@ -580,6 +608,7 @@ def get_user_int(min_value, max_value):
 
                 print("Error! Your choice must be no smaller than " + str(min_value) +
                       " and no larger than " + str(max_value))
+
         except ValueError:
 
             print("Your value was not valid! Your number must be no smaller than " + str(min_value) +
