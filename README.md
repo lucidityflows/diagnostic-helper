@@ -1,4 +1,4 @@
-# diagnostic-tools#
+# diagnostic-tools
 
 *Project Overview*
 
