@@ -6,9 +6,10 @@ import psutil
 import datetime
 import os
 import time
-import random
 import math
 import random
+import requests
+import json
 
 
 # Name: get_lat_long
@@ -585,8 +586,8 @@ def show_single_test_menu():
 
 # Function Name: get_user_int
 # Parameters:
-#       Param1- 'minValue' = an int that represents the minimum allowable value
-#       Param2- 'maxValue' = an int that represents the maximum allowable value
+#       'min_value' = an int that represents the minimum allowable value
+#       'max_value' = an int that represents the maximum allowable value
 # Purpose: This function accepts two ints, a min and max value, and prompts the user to enter a
 #          valid choice. It will prevent invalid selections and check for ValueErrors. When a
 #          valid choice is made, that value will be returned to the user.
@@ -634,5 +635,20 @@ def get_user_response():
 
         return False
 
+# Function Name: post_test_result
+# Parameters:
+#       test_name = String name of the test that will be sent over HTTPS
+#       test_result_dict = key-value pairs that correspond to the test results
+# Purpose: This function will send test results in a Python dictionary over HTTPS to
+#          a test API endpoint. Headers are set to be the test name. After making the
+#          HTTPS post, the status code is displayed to the user.
 
+
+def post_test_result(test_name, test_result_dict):
+
+    base_url = "https://httpbin.org/"
+    api_call = base_url + "post"
+    headers = {'test_name': test_name}
+    response = requests.post(api_call, data=json.dumps(test_result_dict), headers=headers)
+    print("\n\nYour API call received a status code of " + str(response.status_code))
 
